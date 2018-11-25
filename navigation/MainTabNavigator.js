@@ -3,58 +3,40 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
-import SettingsScreen from '../screens/SettingsScreen';
+import List from '../screens/List';
+import AddNew from '../screens/AddNew';
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
+const Todos = createStackNavigator({
+  List,
+},{
+  headerLayoutPreset: 'center',
 });
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+Todos.navigationOptions = {
+  tabBarLabel: 'To-dos',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  ),
-};
-
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
-});
-
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'}
-    />
-  ),
-};
-
-const SettingsStack = createStackNavigator({
-  Settings: SettingsScreen,
-});
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
+      name='ios-list'
+      />
+      ),
+    };
+    
+    const Add = createStackNavigator({
+      AddNew,
+    });
+    
+    Add.navigationOptions = {
+      tabBarLabel: 'Add',
+      tabBarIcon: ({ focused }) => (
+        <TabBarIcon
+        focused={focused}
+        name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle' }
     />
   ),
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
-  LinksStack,
-  SettingsStack,
+  Todos,
+  Add,
 });
