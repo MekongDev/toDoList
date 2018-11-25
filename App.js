@@ -4,9 +4,39 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import MainTabNavigator from './navigation/MainTabNavigator';
 
 export default class App extends React.Component {
-  state = {
-    isLoadingComplete: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoadingComplete: false,
+      id: 1,
+      tasks: []
+    };
+    this.addTask = this.addTask.bind(this)
+    this.removeTask = this.removeTask.bind(this)
+  }
+
+  addTask(e){
+    const { id, tasks } = this.state
+    const value = e.target.value
+    let newTasks = [...tasks]
+    newTasks.push({
+      id,
+      value
+    })
+    this.setState({
+      tasks: newTasks,
+      id: id+1
+    })
+  }
+
+  removeTask(e){
+    const id = e.target.id
+    const { tasks } = this.state
+    const newTasks = tasks.filter(task=>task.id !== id)
+    this.setState({
+      tasks: newTasks
+    })
+  }
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -21,7 +51,7 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <MainTabNavigator />
+          <MainTabNavigator screenProps={{tasks: this.state.tasks, addTask: this.addTask, removeTask: this.removeTask}} />
         </View>
       );
     }
@@ -36,8 +66,6 @@ export default class App extends React.Component {
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       }),
     ]);
