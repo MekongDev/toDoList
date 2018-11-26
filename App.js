@@ -8,16 +8,15 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       isLoadingComplete: false,
-      id: 1,
+      id: 0,
       tasks: []
     };
     this.addTask = this.addTask.bind(this)
     this.removeTask = this.removeTask.bind(this)
   }
 
-  addTask(e){
+  addTask(value){
     const { id, tasks } = this.state
-    const value = e.target.value
     let newTasks = [...tasks]
     newTasks.push({
       id,
