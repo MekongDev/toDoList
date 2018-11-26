@@ -8,6 +8,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       isLoadingComplete: false,
+      errores: '',
       id: 1,
       tasks: []
     };
@@ -29,12 +30,11 @@ export default class App extends React.Component {
     })
   }
 
-  removeTask(e){
-    const id = e.target.id
+  removeTask(id){
     const { tasks } = this.state
     const newTasks = tasks.filter(task=>task.id !== id)
     this.setState({
-      tasks: newTasks
+      tasks: newTasks,
     })
   }
 
@@ -51,7 +51,7 @@ export default class App extends React.Component {
       return (
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <MainTabNavigator screenProps={{tasks: this.state.tasks, addTask: this.addTask, removeTask: this.removeTask}} />
+          <MainTabNavigator screenProps={{tasks: this.state.tasks, addTask: this.addTask, removeTask: this.removeTask, errores: this.state.errores}} />
         </View>
       );
     }
