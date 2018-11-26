@@ -1,7 +1,6 @@
 import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
-
 import TabBarIcon from '../components/TabBarIcon';
 import List from '../screens/List';
 import AddNew from '../screens/AddNew';
@@ -14,22 +13,27 @@ const Todos = createStackNavigator({
 
 Todos.navigationOptions = {
   tabBarLabel: 'To-dos',
+  header: {
+    style: {
+      color: 'red'
+    }},
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name='ios-list'
-      />
-      ),
-    };
+    />
+    ),
+    headerMode: 'screen',
+  };
     
-    const Add = createStackNavigator({
-      AddNew,
-    });
+  const Add = createStackNavigator({
+    AddNew,
+  });
     
-    Add.navigationOptions = {
-      tabBarLabel: 'Add',
-      tabBarIcon: ({ focused }) => (
-        <TabBarIcon
+  Add.navigationOptions = {
+    tabBarLabel: 'Add',
+    tabBarIcon: ({ focused }) => (
+      <TabBarIcon
         focused={focused}
         name={Platform.OS === 'ios' ? 'ios-add-circle' : 'md-add-circle' }
     />
