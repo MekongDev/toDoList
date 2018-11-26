@@ -8,9 +8,9 @@ import Colors from '../constants/Colors';
 export default class List extends React.Component {
   static navigationOptions = {
     title: 'To-do list',
-    // headerStyle:{
-    //   height: 80
-    // },
+    headerStyle:{
+      height: 60
+    },
     headerTitleStyle: {
       fontWeight: 'normal',
       fontSize: 30,
