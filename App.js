@@ -8,7 +8,6 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       isLoadingComplete: false,
-      errores: '',
       id: 1,
       tasks: []
     };
