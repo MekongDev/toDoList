@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, TextInput } from 'react-native';
+import { ScrollView, StyleSheet, View, Text, TextInput, Button } from 'react-native';
 
 export default class AddNew extends React.Component {
   static navigationOptions = {
@@ -22,6 +22,8 @@ export default class AddNew extends React.Component {
   }
 
   handleSubmit(){
+    const { text } = this.state
+    if(!text) return
     this.props.screenProps.addTask(this.state.text)
     this.setState({
       text:''
@@ -30,9 +32,13 @@ export default class AddNew extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <TextInput onChangeText={this.handleChange} value={this.state.text} style={{ height: 40, borderColor: 'gray', borderWidth: 1,  marginBottom: 20 }} onSubmitEditing={this.handleSubmit}></TextInput>
-      </ScrollView>
+      <View style={styles.container}>
+      <View style={styles.frame}>
+        <Text style={styles.text}>To-do:</Text>
+        <TextInput onChangeText={this.handleChange} value={this.state.text} style={styles.input} onSubmitEditing={this.handleSubmit} autoFocus={true} blurOnSubmit={false}></TextInput>
+        <Button title='ADD' onPress={this.handleSubmit}></Button>
+      </View>
+      </View>
     );
   }
 }
@@ -43,4 +49,20 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     backgroundColor: '#fff',
   },
+  frame: {
+    margin:5
+  },
+  text: {
+    color: 'grey',
+    marginBottom: 3
+  },
+  input:{
+    height: 30,
+    borderColor: 'lightgray',
+    borderWidth: 1,
+    marginBottom: 20,
+    borderRadius: 3,
+    paddingLeft: 5,
+    paddingRight: 5
+  }
 });
