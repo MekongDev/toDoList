@@ -1,11 +1,29 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { ScrollView, StyleSheet, View, TouchableOpacity, Button, Alert } from 'react-native';
 import { MonoText } from '../components/StyledText';
 import { Icon } from 'expo'
 import { Platform } from 'react-native';
 import Colors from '../constants/Colors';
+import DisplayModal from '../components/DisplayModal';
 
 export default class List extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      display: false
+    }
+
+    this.triggerModal = this.triggerModal.bind(this);
+
+  }
+
+
+  triggerModal() {
+    this.setState({
+      display: !this.state.display
+    });
+  }
+
   static navigationOptions = {
     title: 'To-do list',
     headerStyle:{
@@ -20,7 +38,8 @@ export default class List extends React.Component {
   render() {
     let { tasks, removeTask } = this.props.screenProps
     return (
-      <ScrollView style={styles.container}>
+      <View style={styles.container}>
+      <ScrollView >
         <View style={styles.frame}>
         {!tasks.length ?
           <MonoText style={styles.text}>
@@ -42,6 +61,18 @@ export default class List extends React.Component {
           ))}
         </View>
       </ScrollView>
+        <View style={styles.buttonContainer}>
+          <Button
+            onPress={() => this.triggerModal()}
+            title='New'
+          />
+        </View>
+        <DisplayModal
+          display={this.state.display}
+          triggerModal={this.triggerModal}
+          {...this.props}
+        />
+      </View>
     );
   }
 }
@@ -63,5 +94,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'grey'
+  },
+  buttonContainer: {
+    margin: 15,
   }
 });
