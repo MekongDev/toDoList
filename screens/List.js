@@ -1,8 +1,7 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, TouchableOpacity, Button, Alert } from 'react-native';
+import { ScrollView, StyleSheet, View, TouchableOpacity, Button, Platform } from 'react-native';
 import { MonoText } from '../components/StyledText';
 import { Icon } from 'expo'
-import { Platform } from 'react-native';
 import Colors from '../constants/Colors';
 import DisplayModal from '../components/DisplayModal';
 

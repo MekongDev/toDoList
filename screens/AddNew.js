@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Text, TextInput, Button } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Platform } from 'react-native';
 
 export default class AddNew extends React.Component {
   static navigationOptions = {
@@ -36,7 +36,7 @@ export default class AddNew extends React.Component {
       <View style={styles.container}>
       <View style={styles.frame}>
         <Text style={styles.text}>To-do:</Text>
-        <TextInput onChangeText={this.handleChange} value={this.state.text} style={styles.input} onSubmitEditing={this.handleSubmit} autoFocus={true} blurOnSubmit={false}></TextInput>
+        <TextInput onChangeText={this.handleChange} value={this.state.text} style={styles.input} onSubmitEditing={this.handleSubmit} autoFocus={true} blurOnSubmit={Platform.OS === 'ios'}></TextInput>
         <Button title='ADD' onPress={this.handleSubmit}></Button>
       </View>
       </View>
