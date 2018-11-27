@@ -4,8 +4,26 @@ import { MonoText } from '../components/StyledText';
 import { Icon } from 'expo'
 import { Platform } from 'react-native';
 import Colors from '../constants/Colors';
+import DisplayModal from '../components/DisplayModal';
 
 export default class List extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      display: false
+    }
+
+    this.triggerModal = this.triggerModal.bind(this);
+
+  }
+
+
+  triggerModal() {
+    this.setState({
+      display: !this.state.display
+    });
+  }
+
   static navigationOptions = {
     title: 'To-do list',
     headerStyle:{
@@ -45,10 +63,15 @@ export default class List extends React.Component {
       </ScrollView>
         <View style={styles.buttonContainer}>
           <Button
-            onPress={() => Alert.alert('Button pressed')}
+            onPress={() => this.triggerModal()}
             title='New'
           />
         </View>
+        <DisplayModal
+          display={this.state.display}
+          triggerModal={this.triggerModal}
+          {...this.props}
+        />
       </View>
     );
   }

@@ -28,6 +28,7 @@ export default class AddNew extends React.Component {
     this.setState({
       text:''
     })
+    this.props.triggerModal && this.props.triggerModal();
   }
 
   render() {
