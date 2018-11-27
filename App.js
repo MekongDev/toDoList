@@ -2,13 +2,14 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import MainTabNavigator from './navigation/MainTabNavigator';
+import { AsyncStorage } from "react-native";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoadingComplete: false,
-      id: 0,
+      id: 1,
       tasks: []
     };
     this.addTask = this.addTask.bind(this)
@@ -22,18 +23,39 @@ export default class App extends React.Component {
       id,
       value
     })
-    this.setState({
-      tasks: newTasks,
-      id: id+1
-    })
+    AsyncStorage.setItem('toDoTasks', JSON.stringify(newTasks))
+      .then(json => {
+        this.setState({
+          tasks: newTasks,
+          id: id+1
+        })
+      })
+      .catch(error => console.log('error!',error));
   }
 
   removeTask(id){
     const { tasks } = this.state
     const newTasks = tasks.filter(task=>task.id !== id)
-    this.setState({
-      tasks: newTasks,
+    AsyncStorage.setItem('toDoTasks', JSON.stringify(newTasks))
+    .then(json => {
+      this.setState({
+        tasks: newTasks,
+      })
     })
+    .catch(error => console.log('error!',error));
+  }
+
+  componentDidMount(){
+    AsyncStorage.getItem('toDoTasks')
+      .then(req => {
+        const recoveredTasks = JSON.parse(req)
+        const lastId = recoveredTasks[recoveredTasks.length -1].id || 0
+        this.setState({
+          tasks: recoveredTasks,
+          id: lastId+1
+        })
+      })
+      .catch(error => console.log('error!',error));
   }
 
   render() {
